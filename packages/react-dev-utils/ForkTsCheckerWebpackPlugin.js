@@ -6,7 +6,7 @@
  */
 
 'use strict';
-
+//brizer: a ts checker webpack plugin
 var ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = ForkTsCheckerWebpackPlugin;

@@ -100,7 +100,7 @@ function printInstructions(appName, urls, useYarn) {
   );
   console.log();
 }
-
+//brizer: create a webpack compiler
 function createCompiler({
   appName,
   config,
@@ -113,6 +113,7 @@ function createCompiler({
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
   let compiler;
+  //brizer: the most basic is use webpack(config),to create a webpack compiler
   try {
     compiler = webpack(config);
   } catch (err) {
@@ -127,6 +128,8 @@ function createCompiler({
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
+
+  //brizer: when we changed a file,webpack is recompiling a bundle.
   compiler.hooks.invalid.tap('invalid', () => {
     if (isInteractive) {
       clearConsole();
@@ -139,12 +142,14 @@ function createCompiler({
   let tsMessagesResolver;
 
   if (useTypeScript) {
+    //brizer: if we use typescript
+    //brizer: executes a plugin after compilation parameters are created.
     compiler.hooks.beforeCompile.tap('beforeCompile', () => {
       tsMessagesPromise = new Promise(resolve => {
         tsMessagesResolver = msgs => resolve(msgs);
       });
     });
-
+    //brizer: use typescript checker to lint
     forkTsCheckerWebpackPlugin
       .getCompilerHooks(compiler)
       .receive.tap('afterTypeScriptCheck', (diagnostics, lints) => {
@@ -208,7 +213,7 @@ function createCompiler({
         clearConsole();
       }
     }
-
+    //brizer: formate webpack error info
     const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
     if (isSuccessful) {

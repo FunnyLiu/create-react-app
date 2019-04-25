@@ -15,6 +15,7 @@ function isLikelyASyntaxError(message) {
 }
 
 // Cleans up webpack error messages.
+//brizer: format webpack stdout to new style,cleans up error message
 function formatMessage(message) {
   let lines = message.split('\n');
 
