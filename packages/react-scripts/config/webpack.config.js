@@ -129,7 +129,7 @@ module.exports = function(webpackEnv) {
     }
     return loaders;
   };
-
+  //brizer: the main webpack config content
   return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production

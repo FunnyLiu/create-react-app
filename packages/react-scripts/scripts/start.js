@@ -9,6 +9,7 @@
 'use strict';
 
 // Do this as the first thing so that any code reading it knows the right env.
+//brizer: set up environmental variable process.env
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
@@ -27,6 +28,7 @@ const verifyPackageTree = require('./utils/verifyPackageTree');
 if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
   verifyPackageTree();
 }
+//brizer: make sure the version that the third-party package depends on is correct
 const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
 verifyTypeScriptSetup();
 // @remove-on-eject-end
@@ -44,7 +46,9 @@ const {
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
+//brizer: put some common paths into this module
 const paths = require('../config/paths');
+//brizer: webpack'config factory, user different config by different param
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
@@ -91,6 +95,7 @@ checkBrowsers(paths.appPath, isInteractive)
       // We have not found a port.
       return;
     }
+    //brizer: init develop webpack config
     const config = configFactory('development');
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
@@ -120,6 +125,9 @@ checkBrowsers(paths.appPath, isInteractive)
       proxyConfig,
       urls.lanUrlForConfig
     );
+    //brizer: normal compiler is just like this demo: https://github.com/FunnyLiu/webpackDemo/blob/master/demo17_HMR_api/server.js#L17
+    //brizer: but here use util.createCompiler to create a compiler
+    //brizer: options also inited by util.createDevServerConfig
     const devServer = new WebpackDevServer(compiler, serverConfig);
     // Launch WebpackDevServer.
     devServer.listen(port, HOST, err => {
