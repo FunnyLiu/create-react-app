@@ -26,7 +26,7 @@ const os = require('os');
 
 const green = chalk.green;
 const cyan = chalk.cyan;
-
+//brizer: get git status,to determine if there are any file changes
 function getGitStatus() {
   try {
     let stdout = execSync(`git status --porcelain`, {
@@ -74,7 +74,7 @@ inquirer
       console.log(cyan('Close one! Eject aborted.'));
       return;
     }
-
+    //brizer: Make sure git has been submitted for easy rollback
     const gitStatus = getGitStatus();
     if (gitStatus) {
       console.error(
@@ -167,7 +167,7 @@ inquirer
       fs.writeFileSync(file.replace(ownPath, appPath), content);
     });
     console.log();
-
+    //brizer: do a lot of file actions
     const ownPackage = require(path.join(ownPath, 'package.json'));
     const appPackage = require(path.join(appPath, 'package.json'));
 
